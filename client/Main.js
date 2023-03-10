@@ -6,6 +6,7 @@ import { Routes, Route, Link, Navigate } from "react-router-dom";
 import Reader from "./components/Reader";
 import VideoContainer from "./components/VideoContainer";
 import YouTubeContainer from "./components/YouTubeContainer";
+import Courses from './components/Courses'
 
 // Import our custom CSS
 import '../client/scss/styles.scss'
@@ -25,6 +26,7 @@ const Main = () => {
           <Route path="/reader" element={<Reader />}></Route>
           <Route path="/video-player" element={<VideoContainer />}></Route>
           <Route path="/video-embed" element={<YouTubeContainer />}></Route>
+          <Route path="/courses" element={<Courses />}></Route>
         </Routes>
       </div>
     </div>

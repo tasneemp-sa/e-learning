@@ -1,6 +1,6 @@
 import React from "react";
 import VideoPlayer from "../VideoPlayer";
-import video from '../../../public/Videos/redux_beginner_advanced.mp4'
+import video from '../../../public/Videos/crystal.mp4'
 import './VideoContainer.css'
 
 const VideoContainer = () =>
