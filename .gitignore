@@ -4,6 +4,8 @@
 /public/Videos/*.mp4
 /public/*.mp4
 
+/public/Books
+
 
 # dependencies
 /node_modules
