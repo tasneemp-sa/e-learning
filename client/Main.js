@@ -24,7 +24,7 @@ const Main = () => {
       <div>
         <Routes>
         <Route path="/" element={<HomePage />}></Route>
-          <Route path="/reader/:courseId" element={<Reader />}></Route>
+          <Route path="/reader/:bookId" element={<Reader />}></Route>
           <Route path="/video-player" element={<VideoContainer />}></Route>
           <Route path="/video-embed" element={<YouTubeContainer />}></Route>
           {/* <Route path="/courses/" element={<Courses />}></Route> */}

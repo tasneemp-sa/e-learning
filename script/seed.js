@@ -21,6 +21,7 @@ const { faker } = require("@faker-js/faker");
 const { courses } = require("./courses");
 const { categories } = require("./categories");
 const { sub_categories } = require("./sub_categories");
+const { books } = require("./books");
 
 /**
  * seed - this function clears the database, updates tables to
@@ -68,6 +69,10 @@ async function seed() {
   for (let i = 0; i < sub_categories.length; i++) {
     await Course_Sub_Category.create(sub_categories[i]);
   }
+
+  for (let i = 0; i < books.length; i++) {
+    await Book.create(books[i]);
+  }
   
   const programming = await Course_Category.findOne({where: {course_cat_name: "Programming Languages"}});
   let javascript = await Course_Sub_Category.findOne({ where: {course_sub_cat_name: 'Javascript'}});
@@ -84,6 +89,12 @@ async function seed() {
   modular_javascript.setCourse_sub_category(javascript);
   dont_know_js.setCourse_sub_category(javascript);
   full_javascript.setCourse_sub_category(javascript);
+
+  const book_dont_know_js = await Book.findOne({where: {book_name: "You Don't Know Javascript, ES6 And Beyond"}});
+  const book_modular_js = await Book.findOne({where: {book_name: "Mastering Modular Javascript"}});
+
+  book_dont_know_js.setCourse(dont_know_js);
+  book_modular_js.setCourse(modular_javascript);
   
   // const users = await User.bulkCreate(seededUsers);
 

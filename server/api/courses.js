@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { Course },
+  models: { Course, Book, Video },
 } = require("../db");
 const Course_Sub_Category = require("../db/models/Course_Sub_Category");
 module.exports = router;
@@ -22,7 +22,7 @@ router.get("/:id", async (req, res, next) => {
       where: {
         id: req.params.id
       },
-      include: [Course_Sub_Category]
+      include: [Course_Sub_Category, Book, Video]
     });
     res.json(course);
   } catch (err) {

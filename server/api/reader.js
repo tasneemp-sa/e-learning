@@ -1,15 +1,15 @@
 const router = require("express").Router();
 const {
-  models: { Course },
+  models: { Course, Book },
 } = require("../db");
 module.exports = router;
  
-// GET /api/reader/:courseId
-router.get("/:courseId", async (req, res, next) => {
+// GET /api/reader/:bookId
+router.get("/:bookId", async (req, res, next) => {
   try {
-    const course = await Course.findOne({
+    const course = await Book.findOne({
         where: {
-            id: req.params.courseId
+            id: req.params.bookId
         }
     });
     res.json(course);

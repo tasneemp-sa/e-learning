@@ -13,7 +13,7 @@ const Book = db.define("book", {
     allowNull: false,
   },
   book_length: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     allowNull: false,
   },
 });
