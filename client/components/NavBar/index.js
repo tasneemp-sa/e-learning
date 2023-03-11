@@ -1,7 +1,9 @@
 import React from "react";
 import "./NavBar.css";
+import {Link} from 'react-router-dom'
 
 const NavBar = () => {
+  const javascriptId = 3;
   return (
     <div>
       <nav
@@ -58,9 +60,11 @@ const NavBar = () => {
                     </a>
                     <ul className="dropdown-menu dropdown-submenu">
                       <li>
-                        <a className="dropdown-item" href="#">
+                   
+                        <a className="dropdown-item" href="/subCategories/3">
                           JavaScript
                         </a>
+           
                       </li>
                       <li>
                         <a className="dropdown-item" href="#">

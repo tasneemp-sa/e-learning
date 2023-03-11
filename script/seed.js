@@ -18,6 +18,10 @@ const {
 
 const { faker } = require("@faker-js/faker");
 
+const { courses } = require("./courses");
+const { categories } = require("./categories");
+const { sub_categories } = require("./sub_categories");
+
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
@@ -53,7 +57,35 @@ async function seed() {
     }),
   ]);
 
-  const users = await User.bulkCreate(seededUsers);
+  for (let i = 0; i < courses.length; i++) {
+    await Course.create(courses[i]);
+  }
+
+  for (let i = 0; i < categories.length; i++) {
+    await Course_Category.create(categories[i]);
+  }
+
+  for (let i = 0; i < sub_categories.length; i++) {
+    await Course_Sub_Category.create(sub_categories[i]);
+  }
+  
+  const programming = await Course_Category.findOne({where: {course_cat_name: "Programming Languages"}});
+  let javascript = await Course_Sub_Category.findOne({ where: {course_sub_cat_name: 'Javascript'}});
+  const python = await Course_Sub_Category.findOne({ where: {course_sub_cat_name: 'Python'}});
+
+  const modular_javascript = await Course.findOne({where: {course_name: "Mastering Modular Javascript.js"}});
+  const dont_know_js = await Course.findOne({where: {course_name: "You Don't Know JS, ES6 and BEyond"}});
+  const full_javascript = await Course.findOne({where: {course_name: "Javascript Programming Full Course"}});
+
+  
+  javascript.setCourse_category(programming);
+  python.setCourse_category(programming);
+
+  modular_javascript.setCourse_sub_category(javascript);
+  dont_know_js.setCourse_sub_category(javascript);
+  full_javascript.setCourse_sub_category(javascript);
+  
+  // const users = await User.bulkCreate(seededUsers);
 
   console.log(`seeded successfully`);
   return;

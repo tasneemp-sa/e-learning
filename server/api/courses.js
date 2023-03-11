@@ -13,14 +13,6 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// router.post("/", async (req, res, next) => {
-//   try {
-//     res.status(201).send(await Course.create(req.body));
-//   } catch (e) {
-//     next(e);
-//   }
-// });
-
 router.get("/:id", async (req, res, next) => {
   try {
     const user = await Course.findByPk(req.params.id);
@@ -29,12 +21,3 @@ router.get("/:id", async (req, res, next) => {
     next(err);
   }
 });
-
-// router.put("/:id", async (req, res, next) => {
-//   try {
-//     const user = await User.findByPk(req.params.id);
-//     res.send(await user.update(req.body));
-//   } catch (e) {
-//     next(e);
-//   }
-// });
