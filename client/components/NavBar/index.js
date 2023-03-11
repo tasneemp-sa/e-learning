@@ -1,26 +1,21 @@
 import React, { useEffect, useRef } from "react";
 import "./NavBar.css";
-import {Link} from 'react-router-dom'
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getLogin, getUserId } from "../../reducers/auth";
+import { connect } from "react-redux";
+import { logout } from "../../reducers/auth";
+import withRouter from "../../withRouter";
 
-const NavBar = () => {
-  const login = useSelector(getLogin);
-  const dispatch = useDispatch();
-let user = useRef()
-
-  useEffect(() => {
-    if (window.localStorage.getItem("token")) {
-
-      async function getUser() {
-        user.current = await dispatch(getUserId(window.localStorage.getItem("token")))
-        console.log('user inside nav', user);
-      }
-      getUser();
-    }
-  }, [dispatch, user.current])
-
+const Navbar = (props) => {
+  const { user, isLoggedIn, logoutUser } = props;
   const javascriptId = 3;
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    event.preventDefault();
+    setAnchorEl(event.currentTarget);
+  };
 
   return (
     <div>
@@ -30,7 +25,7 @@ let user = useRef()
       >
         <div className="container-fluid">
           <a className="navbar-brand text-primary font-height" href="/home">
-            SKY'S THE LIMIT
+            SKY'S THE LIM<span className="text-danger">IT</span>
           </a>
           <button
             className="navbar-toggler"
@@ -78,11 +73,9 @@ let user = useRef()
                     </a>
                     <ul className="dropdown-menu dropdown-submenu">
                       <li>
-                   
                         <a className="dropdown-item" href="/subCategories/3">
                           JavaScript
                         </a>
-           
                       </li>
                       <li>
                         <a className="dropdown-item" href="#">
@@ -104,7 +97,7 @@ let user = useRef()
                       </li>
                       <li>
                         <a className="dropdown-item" href="#">
-                        User Experience
+                          User Experience
                         </a>
                       </li>
                     </ul>
@@ -120,7 +113,6 @@ let user = useRef()
                           React
                         </a>
                       </li>
-                      
                     </ul>
                   </li>
                 </ul>
@@ -137,22 +129,26 @@ let user = useRef()
               </button>
             </form>
 
-            <ul className="navbar-nav ms-auto ">
-              {login === 'Login' && user.current && user.current.payload !== undefined  ? (
+            <ul className="navbar-nav ms-auto list-inline">
+              {isLoggedIn ? (
+                <>
+                  <li className="nav-item">
+                   <p className="nav-link"> {`HI, ${user.first_name.toUpperCase()}`}</p>
+             
+                  </li>
+                  <li className="nav-item">
+                    <p className="nav-link" onClick={logoutUser}>
+                      Log Out
+                    </p>
+                  </li>
+                </>
+              ) : (
                 <li className="nav-item">
-                <a className="nav-link" href="/login">
-                  Hi {user.current && user.current.payload !== undefined ? `${user.current.payload.first_name}` : null}
-                  
-                </a>
-              </li>
-              ): null}
-            
-              <li className="nav-item">
-                <a className="nav-link" href="/login">
-                  {login === 'Login' ? "Log Out": "Log In"}
-                  
-                </a>
-              </li>
+                  <a className="nav-link" href="/login">
+                    Log In
+                  </a>
+                </li>
+              )}
             </ul>
           </div>
         </div>
@@ -161,4 +157,20 @@ let user = useRef()
   );
 };
 
-export default NavBar;
+const mapState = (state) => {
+  console.log('inside nav !!state.auth.id', state.auth)
+  return {
+    user: state.auth,
+    isLoggedIn: !!state.auth.id,
+  };
+};
+
+const mapDispatch = (dispatch) => {
+  return {
+    logoutUser() {
+      dispatch(logout());
+    },
+  };
+};
+
+export default withRouter(connect(mapState, mapDispatch)(Navbar));

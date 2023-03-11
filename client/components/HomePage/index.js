@@ -81,19 +81,13 @@ const HomePage = () => {
           <div class="col-auto d-none d-lg-block">
           </div>
           <div class="col p-4 d-flex flex-column position-static">
-            <strong class="d-inline-block mb-2 text-primary">
-              Your History
-            </strong>
-            <h3 class="mb-0">React Fundamentals</h3>
-            <div class="mb-1 text-muted">Mar 10</div>
-            <div class="mb-1 text-muted">Mar 10</div>
+            <h3 class="mb-0">Keep Learning With Courses</h3>
             <p class="card-text mb-auto">
-              This is a wider card with supporting text below as a natural
-              lead-in to additional content.
+              We've saved your recommendations so its easy to pick up where you left off.
             </p>
             <p className="lead mb-0">
           <a href="#" className="text-white fw-bold">
-            Build Your Skills...
+            Go To Your Courses...
           </a>
         </p>
           </div>

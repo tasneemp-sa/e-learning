@@ -1,70 +1,20 @@
 import React, { useEffect, useState } from "react";
 import "./SignIn.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import {
-  authenticate,
-  getLogin,
-  getLogout,
-  getSignup,
-  setLogin,
-  setLogout,
-  setSignup,
-} from "../../reducers/auth";
+import { Link, useNavigate} from "react-router-dom";
+import { authenticateUser } from "../../reducers/auth";
+import { connect } from "react-redux";
+import withRouter from "../../withRouter";
 
-const SignIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const signup = useSelector(getSignup);
-  console.log("signup ", signup);
-  const login = useSelector(getLogin);
-  console.log("login ", login);
-  // const {name, displayName, handleSubmit, error} = props
-  const logout = useSelector(getLogout);
-
-  async function handleSubmit(evt) {
-    if (evt.keyCode === 13) return;
-    evt.preventDefault();
-    const method = evt.target.name;
-    console.log("formName", method);
-    const email = evt.target.email.value;
-    const password = evt.target.password.value;
-    await dispatch(authenticate({ email, password, method }));
-    evt.target.email.value = "";
-    evt.target.password.value = "";
-    console.log(
-      "token on method",
-      method,
-      " ",
-      window.localStorage.getItem("token")
-    );
-    if (window.localStorage.getItem("token") !== null && method === "login") {
-      // dispatch(setLogout());
-      navigate("/home");
-    } else if (method === "signup") {
-      dispatch(setLogin());
-    }
-  }
-
-  async function handleLogin() {
-    await dispatch(setLogin());
-  }
-
-  async function handleSignUp() {
-    await dispatch(setSignup());
-  }
-
-  useEffect(() => {
-    window.localStorage.removeItem("token");
-  }, []);
+const SignIn = (props) => {
+  const navigate = useNavigate()
+  const { name, handleSubmit, error, isLoggedIn } = props;
+  if (isLoggedIn) navigate('/home');
 
   return (
     <div className="login-container text-center">
       <div className="form-signin w-100 m-auto ">
-        <form onSubmit={(evt) => handleSubmit(evt)} name={login !== "" ? "login" : "signup"}>
+        <form onSubmit={handleSubmit} name={name}>
           <h1 className="h3 mb-3 fw-normal">Please sign in or sign up</h1>
 
           <div className="form-floating">
@@ -74,8 +24,6 @@ const SignIn = () => {
               id="floatingInput"
               name="email"
               placeholder="name@example.com"
-              value={email}
-              onChange={(evt) => setEmail(evt.target.value)}
               required
             />
             <label htmlFor="floatingInput">Email address</label>
@@ -87,8 +35,6 @@ const SignIn = () => {
               id="floatingPassword"
               name="password"
               placeholder="Password"
-              value={password}
-              onChange={(evt) => setPassword(evt.target.value)}
               required
             />
             <label htmlFor="floatingPassword">Password</label>
@@ -99,28 +45,43 @@ const SignIn = () => {
               <input type="checkbox" value="remember-me" /> Remember me
             </label>
           </div>
-          {signup === 'Sign Up' ? (
-            <div>
-          <button className="w-100 btn btn-lg btn-primary" type="submit" >
-            Sign Up
-          </button>
+
+          <div>
+            <button
+              className="w-100 btn btn-lg btn-primary mb-2"
+              type="submit"
+            >
+              Sign in
+            </button>
+            {error && error.response && <div> {error.response.data} </div>}
           </div>
-          ) : (
-            <div>
-            <button className="w-100 btn btn-lg btn-primary mb-2" type="submit" onClick={() => handleLogin()}>
-            Sign in
-          </button>
-          <button className="w-100 btn btn-lg btn-primary" onClick={() => handleSignUp()} >
-            Sign Up
-          </button>
-          </div>
-          ) }
-          
-          {/* <p className="mt-5 mb-3 text-muted">&copy; 2023</p> */}
         </form>
       </div>
     </div>
   );
 };
 
-export default SignIn;
+
+const mapState = (state) => {
+  return {
+    error: state.auth.error,
+    isLoggedIn: !!state.auth.id,
+  };
+};
+
+const mapDispatch = (dispatch) => {
+  return {
+    handleSubmit(evt) {
+      evt.preventDefault();
+      const formName = "login";
+      const email = evt.target.email.value;
+      const password = evt.target.password.value;
+
+      dispatch(authenticateUser(email, password, formName));
+    },
+  };
+};
+
+export default withRouter(connect(mapState, mapDispatch)(SignIn));
+
+// export default SignIn;

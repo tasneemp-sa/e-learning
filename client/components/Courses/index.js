@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import "./Courses.css";
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, connect } from "react-redux";
 import {
   fetchAllSubCategoryCourses,
   selectSubCourses,
 } from "../../reducers/allCoursesPageSlice";
 import { useNavigate } from "react-router-dom";
+import {me} from '../../reducers/auth'
+import withRouter from "../../withRouter";
 
 const Courses = () => {
   const { subCategoryId } = useParams();
@@ -90,4 +92,20 @@ const Courses = () => {
   );
 };
 
-export default Courses;
+const mapState = (state) => {
+  return {
+    username: state.auth.username,
+    isLoggedin: !!state.auth.id
+  };
+};
+
+const mapDispatch = (dispatch) => {
+  return {
+    loadInitialData() {
+      dispatch(me());
+    },
+  };
+};
+export default withRouter(connect(mapState, mapDispatch)(Courses));
+
+// export default Courses;

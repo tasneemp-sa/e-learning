@@ -2,11 +2,12 @@ import React from "react";
 /* 
     This is you entry point for your routes
 */
-import { Routes, Route, Link, Navigate } from "react-router-dom";
+import { BrowserRouter,Routes, Route, Link, Navigate } from "react-router-dom";
 import Reader from "./components/Reader";
 import VideoContainer from "./components/VideoContainer";
 import YouTubeContainer from "./components/YouTubeContainer";
 import Courses from './components/Courses'
+import withRouter from './withRouter'
 
 // Import our custom CSS
 import '../client/scss/styles.scss'
@@ -17,8 +18,12 @@ import NavBar from "./components/NavBar";
 import HomePage from "./components/HomePage";
 import SingleCourse from "./components/SingleCourse";
 import SignIn from "./components/SignIn";
+import { connect } from "react-redux";
+import {me} from './reducers/auth'
 
-const Main = () => {
+const Main = (props) => {
+
+  const { isLoggedIn } = props;
   return (
     <div className="wrapper">
       <NavBar/>
@@ -39,4 +44,21 @@ const Main = () => {
   );
 };
 
-export default Main;
+const mapState = (state) => {
+  return {
+    isLoggedIn: !!state.auth.id,
+    isAdmin: state.auth.status === "admin",
+  };
+};
+
+const mapDispatch = (dispatch) => {
+  return {
+    loadInitialData() {
+      dispatch(me());
+    },
+  };
+};
+
+export default withRouter(connect(mapState, mapDispatch)(Main));
+
+// export default Main;
