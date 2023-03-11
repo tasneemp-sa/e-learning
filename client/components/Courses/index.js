@@ -70,7 +70,7 @@ const Courses = () => {
                               <button
                                 type="button"
                                 className="btn btn-sm btn-outline-secondary"
-                                onClick={() => {navigate(`./courses/${course.id}`)}}
+                                onClick={() => {navigate(`/courses/${course.id}`)}}
                               >
                                 View
                               </button>

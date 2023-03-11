@@ -15,6 +15,7 @@ import '../client/scss/styles.scss'
 import * as bootstrap from 'bootstrap'
 import NavBar from "./components/NavBar";
 import HomePage from "./components/HomePage";
+import SingleCourse from "./components/SingleCourse";
 
 const Main = () => {
   return (
@@ -23,11 +24,12 @@ const Main = () => {
       <div>
         <Routes>
         <Route path="/" element={<HomePage />}></Route>
-          <Route path="/reader" element={<Reader />}></Route>
+          <Route path="/reader/:courseId" element={<Reader />}></Route>
           <Route path="/video-player" element={<VideoContainer />}></Route>
           <Route path="/video-embed" element={<YouTubeContainer />}></Route>
-          <Route path="/courses" element={<Courses />}></Route>
+          {/* <Route path="/courses/" element={<Courses />}></Route> */}
           <Route path="/subCategories/:subCategoryId" element={<Courses />}></Route>
+          <Route path="/courses/:id" element={<SingleCourse />}></Route>
         </Routes>
       </div>
     </div>

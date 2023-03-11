@@ -1,24 +1,71 @@
-import React from "react";
-import './SingleCourse.css'
+import React, { useEffect } from "react";
+import "./SingleCourse.css";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchSingleCourse,
+  selectSingleCourse,
+} from "../../reducers/singleCoursePageSlice";
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBookOpen } from "@fortawesome/free-solid-svg-icons"; 
+import { faVideoCamera } from "@fortawesome/free-solid-svg-icons"; 
+import { fetchAllSubCategoryCourses, selectSubCourses } from "../../reducers/allCoursesPageSlice";
 
 const SingleCourse = () => {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const courseDetails = useSelector(selectSingleCourse);
+  console.log("courseDetails ", courseDetails.courseSubCategoryId);
+
+  useEffect(() => {
+    async function getCourseDetails() {
+      await dispatch(fetchSingleCourse(id));
+    }
+    getCourseDetails();
+  }, [dispatch]);
+
   return (
     <div className="container">
-      <div class="col-md-6">
-      <div class="col-auto d-none d-lg-block">
-          <img class="bd-placeholder-img" width="200" height="250" src="http://www.w3.org/2000/svg" />
+      {courseDetails !== null ? (
+        <div className="container">
+          
+          <div className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div className="col-auto d-none d-lg-block">
+              <img
+                className="img-fluid"
+                width="300"
+                height="400"
+                src={courseDetails.thumbnail}
+                alt=""
+              />
+            </div>
+            <div className="col p-4 d-flex flex-column position-static">
+              <strong className="d-inline-block mb-2 text-primary">
+              {courseDetails.type === "book" ? (
+                <FontAwesomeIcon icon={faBookOpen} />
+              ) : (
+                <FontAwesomeIcon icon={faVideoCamera}/>
+              )}
+              </strong>
+              <h3 className="mb-0">{courseDetails.course_name}</h3>
+              <div className="mb-1 text-muted">By {courseDetails.author}</div>
+              <p className="card-text mb-2">{courseDetails.time_to_complete}</p>
+              <p className="card-text mb-2">Topics:</p>
+              <a href="#" className="stretched-link">
+                See Courses
+              </a>
+              <button type="button" className="btn btn-primary btn-lg col-3 mt-3">Start Course</button>
+            </div>
+          </div>
+          <h3 className="mb-0">Overview</h3>
+          <p className="card-text mb-auto">{courseDetails.overview}</p>
+          <h3 className="mb-0 mt-2">Requirements</h3>
+          <p className="card-text mb-auto">{courseDetails.meant_for}</p>
         </div>
-      <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        <div class="col p-4 d-flex flex-column position-static">
-          <strong class="d-inline-block mb-2 text-primary">World</strong>
-          <h3 class="mb-0">Featured post</h3>
-          <div class="mb-1 text-muted">Nov 12</div>
-          <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-          <a href="#" class="stretched-link">Continue reading</a>
-        </div>
-        
-      </div>
-    </div>
+      ) : (
+        "Loading"
+      )}
     </div>
   );
 };
