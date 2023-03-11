@@ -16,6 +16,7 @@ import * as bootstrap from 'bootstrap'
 import NavBar from "./components/NavBar";
 import HomePage from "./components/HomePage";
 import SingleCourse from "./components/SingleCourse";
+import SignIn from "./components/SignIn";
 
 const Main = () => {
   return (
@@ -24,8 +25,10 @@ const Main = () => {
       <div>
         <Routes>
         <Route path="/" element={<HomePage />}></Route>
+        <Route path="/home" element={<HomePage />}></Route>
+        <Route path="/login" element={<SignIn />}></Route>
           <Route path="/reader/:bookId" element={<Reader />}></Route>
-          <Route path="/video-player" element={<VideoContainer />}></Route>
+          <Route path="/video-player/:videoId" element={<VideoContainer />}></Route>
           <Route path="/video-embed" element={<YouTubeContainer />}></Route>
           {/* <Route path="/courses/" element={<Courses />}></Route> */}
           <Route path="/subCategories/:subCategoryId" element={<Courses />}></Route>

@@ -12,7 +12,7 @@ const {
     Track_Progress,
     User_History,
     User_Book_Progress,
-    User_Video_Progress
+    User_Video_Progress,
   },
 } = require("../server/db");
 
@@ -22,6 +22,7 @@ const { courses } = require("./courses");
 const { categories } = require("./categories");
 const { sub_categories } = require("./sub_categories");
 const { books } = require("./books");
+const {videos} = require("./videos");
 
 /**
  * seed - this function clears the database, updates tables to
@@ -73,16 +74,31 @@ async function seed() {
   for (let i = 0; i < books.length; i++) {
     await Book.create(books[i]);
   }
-  
-  const programming = await Course_Category.findOne({where: {course_cat_name: "Programming Languages"}});
-  let javascript = await Course_Sub_Category.findOne({ where: {course_sub_cat_name: 'Javascript'}});
-  const python = await Course_Sub_Category.findOne({ where: {course_sub_cat_name: 'Python'}});
 
-  const modular_javascript = await Course.findOne({where: {course_name: "Mastering Modular Javascript.js"}});
-  const dont_know_js = await Course.findOne({where: {course_name: "You Don't Know JS, ES6 and BEyond"}});
-  const full_javascript = await Course.findOne({where: {course_name: "Javascript Programming Full Course"}});
+  for (let i = 0; i < videos.length; i++) {
+    await Video.create(videos[i]);
+  }
 
-  
+  const programming = await Course_Category.findOne({
+    where: { course_cat_name: "Programming Languages" },
+  });
+  let javascript = await Course_Sub_Category.findOne({
+    where: { course_sub_cat_name: "Javascript" },
+  });
+  const python = await Course_Sub_Category.findOne({
+    where: { course_sub_cat_name: "Python" },
+  });
+
+  const modular_javascript = await Course.findOne({
+    where: { course_name: "Mastering Modular Javascript.js" },
+  });
+  const dont_know_js = await Course.findOne({
+    where: { course_name: "You Don't Know JS, ES6 and BEyond" },
+  });
+  const full_javascript = await Course.findOne({
+    where: { course_name: "Javascript Programming Full Course" },
+  });
+
   javascript.setCourse_category(programming);
   python.setCourse_category(programming);
 
@@ -90,12 +106,22 @@ async function seed() {
   dont_know_js.setCourse_sub_category(javascript);
   full_javascript.setCourse_sub_category(javascript);
 
-  const book_dont_know_js = await Book.findOne({where: {book_name: "You Don't Know Javascript, ES6 And Beyond"}});
-  const book_modular_js = await Book.findOne({where: {book_name: "Mastering Modular Javascript"}});
+  const book_dont_know_js = await Book.findOne({
+    where: { book_name: "You Don't Know Javascript, ES6 And Beyond" },
+  });
+  const book_modular_js = await Book.findOne({
+    where: { book_name: "Mastering Modular Javascript" },
+  });
 
   book_dont_know_js.setCourse(dont_know_js);
   book_modular_js.setCourse(modular_javascript);
-  
+
+  const video_full_javascript = await Video.findOne({
+    where: { video_name: "Javascript Programming Full Course" },
+  });
+
+  video_full_javascript.setCourse(full_javascript);
+
   // const users = await User.bulkCreate(seededUsers);
 
   console.log(`seeded successfully`);

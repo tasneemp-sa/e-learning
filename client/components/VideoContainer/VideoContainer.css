@@ -2,11 +2,13 @@
     display: grid;
   min-height: 100vh;
   place-content: center;
-  background: linear-gradient(rgb(96, 29, 222), rgb(44, 9, 142));
+  /* background: linear-gradient(rgb(96, 29, 222), rgb(44, 9, 142)); */
+
+  background: linear-gradient(180deg, black, purple, blue, turquoise);
 }
 
 .video-js {
-    width: 700px;
+    width: 70vw;
     height: autot;
     aspect-ratio: 16 / 9;
     display: block;

@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import "./NavBar.css";
 import {Link} from 'react-router-dom'
+import { useDispatch, useSelector } from "react-redux";
+import { getLogin, getUserId } from "../../reducers/auth";
 
 const NavBar = () => {
+  const login = useSelector(getLogin);
+  const dispatch = useDispatch();
+let user = useRef()
+
+  useEffect(() => {
+    if (window.localStorage.getItem("token")) {
+
+      async function getUser() {
+        user.current = await dispatch(getUserId(window.localStorage.getItem("token")))
+        console.log('user inside nav', user);
+      }
+      getUser();
+    }
+  }, [dispatch, user.current])
+
   const javascriptId = 3;
+
   return (
     <div>
       <nav
@@ -11,7 +29,7 @@ const NavBar = () => {
         id="nav1"
       >
         <div className="container-fluid">
-          <a className="navbar-brand text-primary font-height" href="">
+          <a className="navbar-brand text-primary font-height" href="/home">
             SKY'S THE LIMIT
           </a>
           <button
@@ -120,9 +138,19 @@ const NavBar = () => {
             </form>
 
             <ul className="navbar-nav ms-auto ">
+              {login === 'Login' && user.current && user.current.payload !== undefined  ? (
+                <li className="nav-item">
+                <a className="nav-link" href="/login">
+                  Hi {user.current && user.current.payload !== undefined ? `${user.current.payload.first_name}` : null}
+                  
+                </a>
+              </li>
+              ): null}
+            
               <li className="nav-item">
-                <a className="nav-link" href="">
-                  Log In
+                <a className="nav-link" href="/login">
+                  {login === 'Login' ? "Log Out": "Log In"}
+                  
                 </a>
               </li>
             </ul>

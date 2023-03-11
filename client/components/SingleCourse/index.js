@@ -61,10 +61,17 @@ const SingleCourse = () => {
               <a href="#" className="stretched-link">
                 See Courses
               </a>
-              <a href={`/reader/${courseDetails.book.id}`} className="stretched-link">
-              <button type="button" className="btn btn-primary btn-lg col-3 mt-3">Start Course</button>
-                </a>
-              
+
+              {courseDetails.type === 'book' ? (
+                 <a href={`/reader/${courseDetails.book.id}`} className="stretched-link">
+                 <button type="button" className="btn btn-primary btn-lg col-3 mt-3">Start Course</button>
+                   </a>
+              ) : (
+                <a href={`/video-player/${courseDetails.video.id}`} className="stretched-link">
+                <button type="button" className="btn btn-primary btn-lg col-3 mt-3">Start Course</button>
+                  </a>
+              )}
+               
             </div>
           </div>
           <h3 className="mb-0">Overview</h3>

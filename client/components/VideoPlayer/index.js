@@ -1,7 +1,7 @@
 
 import React, {useState, useRef, useEffect} from 'react'
 import videojs from 'video.js';
-// import '../../../node_modules/video.js/dist/video-js.css'
+import '../../../node_modules/video.js/dist/video-js.css'
 
 import '@videojs/themes/dist/sea/index.css'
 

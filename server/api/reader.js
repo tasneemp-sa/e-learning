@@ -7,22 +7,22 @@ module.exports = router;
 // GET /api/reader/:bookId
 router.get("/:bookId", async (req, res, next) => {
   try {
-    const course = await Book.findOne({
+    const book = await Book.findOne({
         where: {
             id: req.params.bookId
         }
     });
-    res.json(course);
+    res.json(book);
   } catch (err) {
     next(err);
   }
 });
 
-router.get("/:id", async (req, res, next) => {
-  try {
-    const user = await Course.findByPk(req.params.id);
-    res.json(user);
-  } catch (err) {
-    next(err);
-  }
-});
+// router.get("/:id", async (req, res, next) => {
+//   try {
+//     const user = await Course.findByPk(req.params.id);
+//     res.json(user);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
