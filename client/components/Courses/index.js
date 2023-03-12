@@ -9,6 +9,9 @@ import {
 import { useNavigate } from "react-router-dom";
 import {me} from '../../reducers/auth'
 import withRouter from "../../withRouter";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBookOpen } from "@fortawesome/free-solid-svg-icons";
+import { faVideoCamera } from "@fortawesome/free-solid-svg-icons";
 
 const Courses = () => {
   const { subCategoryId } = useParams();
@@ -24,15 +27,13 @@ const Courses = () => {
   }, [dispatch]);
 
   return (
-    <div className="container">
+    <div className="container mt-0 pt-0">
       <section className="py-5 text-center container">
         <div className="row py-lg-5">
           <div className="col-lg-6 col-md-8 mx-auto">
             <h1 className="fw-light">{courses && courses.length ? `${courses[0]["course_sub_category"]["course_sub_cat_name"]}`: "Loading"}</h1>
             <p className="lead text-muted">
-              Something short and leading about the collection below—its
-              contents, the creator, etc. Make it short and sweet, but not too
-              short so folks don’t simply skip over it entirely.
+            {courses && courses.length ? `${courses[0]["course_sub_category"]["course_sub_cat_description"]}`: "Loading"}
             </p>
             <p>
               <a href="#" className="btn btn-primary my-2">
@@ -78,6 +79,13 @@ const Courses = () => {
                               </button>
                             </div>
                             <small className="text-muted">{course.time_to_complete}</small>
+                            <strong className="d-inline-block mb-2 text-primary">
+                            {course.type === "book" ? (
+                              <FontAwesomeIcon icon={faBookOpen} />
+                            ) : (
+                              <FontAwesomeIcon icon={faVideoCamera} />
+                            )}
+                          </strong>
                           </div>
                         </div>
                       </div>

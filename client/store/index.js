@@ -4,6 +4,7 @@ import allCoursesPageSlice from "../reducers/allCoursesPageSlice";
 import auth from "../reducers/auth";
 import readerSlice from "../reducers/readerSlice";
 import singleCoursePageSlice from "../reducers/singleCoursePageSlice";
+import userHistorySlice from "../reducers/userHistorySlice";
 import videoSlice from "../reducers/videoSlice";
 
 
@@ -13,7 +14,8 @@ export const store = configureStore({
     singleCourse: singleCoursePageSlice,
     reader: readerSlice,
     video: videoSlice,
-    auth: auth
+    auth: auth,
+    userHistory: userHistorySlice
   },
 });
 

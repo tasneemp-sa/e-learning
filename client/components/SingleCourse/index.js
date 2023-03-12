@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./SingleCourse.css";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector, connect } from "react-redux";
 import {
   fetchSingleCourse,
   selectSingleCourse,
@@ -11,10 +11,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookOpen } from "@fortawesome/free-solid-svg-icons"; 
 import { faVideoCamera } from "@fortawesome/free-solid-svg-icons"; 
 import { fetchAllSubCategoryCourses, selectSubCourses } from "../../reducers/allCoursesPageSlice";
+import withRouter from "../../withRouter";
+import {me} from '../../reducers/auth'
+import { getLoggedInUserId, postUserHistory } from "../../reducers/userHistorySlice";
 
 const SingleCourse = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const courseDetails = useSelector(selectSingleCourse);
   console.log("courseDetails ", courseDetails);
   console.log("book ", courseDetails.book);
@@ -26,6 +30,25 @@ const SingleCourse = () => {
     }
     getCourseDetails();
   }, [dispatch]);
+
+  // async function handleStartBook() {
+  //   console.log('inside handleStart ')
+  //   if (window.localStorage.getItem("token")) {
+  //     let userId = await dispatch(getLoggedInUserId())
+  //     await dispatch(postUserHistory({userId: userId.payload, courseId: id}))
+  //   }
+  //   navigate(`/reader/${courseDetails.book.id}`)
+    
+  // }
+
+  // async function handleStartVideo() {
+  //   if (window.localStorage.getItem("token")) {
+  //     let userId = await dispatch(getLoggedInUserId())
+  //     await dispatch(postUserHistory({userId: userId.payload, courseId: id}))
+  //   }
+  //   navigate(`/video-player/${courseDetails.video.id}`)
+    
+  // }
 
   return (
     <div className="container">
@@ -53,22 +76,22 @@ const SingleCourse = () => {
               <h3 className="mb-0">{courseDetails.course_name}</h3>
               <div className="mb-1 text-muted">By {courseDetails.author}</div>
               <p className="card-text mb-2">{courseDetails.time_to_complete}</p>
-              <p className="card-text mb-2">Topics:
-                <a href={`/courses/${courseDetails.course_sub_category.id}`} className="stretched-link">
+              <p className="card-text mb-2">Topics: 
+                <Link to={`/courses/${courseDetails.course_sub_category.id}`} className="stretched-link">
                   {courseDetails.course_sub_category.course_sub_cat_name}
-                </a>
+                </Link>
               </p>
-              <a href="#" className="stretched-link">
-                See Courses
-              </a>
+              <Link to="/courses" className="stretched-link">
+                See All Courses
+              </Link>
 
               {courseDetails.type === 'book' ? (
                  <a href={`/reader/${courseDetails.book.id}`} className="stretched-link">
-                 <button type="button" className="btn btn-primary btn-lg col-3 mt-3">Start Course</button>
+                 <button type="button" className="btn btn-primary btn-lg col-3 mt-3" /*onClick={() => handleStartBook()}*/>Start Course</button>
                    </a>
               ) : (
                 <a href={`/video-player/${courseDetails.video.id}`} className="stretched-link">
-                <button type="button" className="btn btn-primary btn-lg col-3 mt-3">Start Course</button>
+                <button type="button" className="btn btn-primary btn-lg col-3 mt-3" /*onClick={() => handleStartVideo()}*/>Start Course</button>
                   </a>
               )}
                
@@ -86,4 +109,20 @@ const SingleCourse = () => {
   );
 };
 
-export default SingleCourse;
+
+const mapState = (state) => {
+  return {
+    isLoggedIn: !!state.auth.id,
+  };
+};
+
+const mapDispatch = (dispatch) => {
+  return {
+    loadInitialData() {
+      dispatch(me());
+    },
+  };
+};
+
+export default withRouter(connect(mapState, mapDispatch)(SingleCourse));
+// export default SingleCourse;

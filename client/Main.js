@@ -20,6 +20,8 @@ import SingleCourse from "./components/SingleCourse";
 import SignIn from "./components/SignIn";
 import { connect } from "react-redux";
 import {me} from './reducers/auth'
+import AllCourses from "./components/AllCourses";
+import UserHistory from "./components/UserHistory";
 
 const Main = (props) => {
 
@@ -35,9 +37,10 @@ const Main = (props) => {
           <Route path="/reader/:bookId" element={<Reader />}></Route>
           <Route path="/video-player/:videoId" element={<VideoContainer />}></Route>
           <Route path="/video-embed" element={<YouTubeContainer />}></Route>
-          {/* <Route path="/courses/" element={<Courses />}></Route> */}
+          <Route path="/courses/" element={<AllCourses />}></Route>
           <Route path="/subCategories/:subCategoryId" element={<Courses />}></Route>
           <Route path="/courses/:id" element={<SingleCourse />}></Route>
+          <Route path="/userHistory/:userId" element={<UserHistory />}></Route>
         </Routes>
       </div>
     </div>

@@ -9,7 +9,7 @@ const categoriesArr = [
         course_cat_name: "Design"
     },
     {
-        course_cat_name: "React"
+        course_cat_name: "Libraries"
     },
 ]
 

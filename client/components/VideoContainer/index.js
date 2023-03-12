@@ -3,9 +3,11 @@ import VideoPlayer from "../VideoPlayer";
 import video1 from '../../../public/Videos/JavaScriptProgramming.mp4'
 import video2 from '../../../public/Videos/redux_beginner_advanced.mp4'
 import './VideoContainer.css'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchVideoData, selectVideoData } from "../../reducers/videoSlice";
+import withRouter from "../../withRouter";
+import {me} from '../../reducers/auth'
 
 const VideoContainer = () => {
   const {videoId} = useParams();
@@ -14,17 +16,20 @@ const VideoContainer = () => {
   console.log('videoData ', videoData);
 
   let video = video1;
-  if (videoData.id === 2) {
-    video = video2;
-  }
-  
-  useEffect (() => {
-    async function getVideoData () {
-      await dispatch(fetchVideoData(parseInt(videoId)))
-    }
 
-    getVideoData();
-  },[dispatch]);
+  useEffect(() => {
+    if (videoId === 2) {
+      video = video2;
+    }
+  }, [videoId]);
+  
+  // useEffect (() => {
+  //   async function getVideoData () {
+  //     await dispatch(fetchVideoData(parseInt(videoId)))
+  //   }
+
+  //   getVideoData();
+  // },[dispatch]);
 
     const videoJsOptions = {
         autoplay: false,
@@ -43,4 +48,20 @@ const VideoContainer = () => {
   );
 };
 
-export default VideoContainer;
+const mapState = (state) => {
+  return {
+    isLoggedIn: !!state.auth.id,
+  };
+};
+
+const mapDispatch = (dispatch) => {
+  return {
+    loadInitialData() {
+      dispatch(me());
+    },
+  };
+};
+
+export default withRouter(connect(mapState, mapDispatch)(VideoContainer));
+
+// export default VideoContainer;

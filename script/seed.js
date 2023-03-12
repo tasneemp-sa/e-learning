@@ -23,6 +23,7 @@ const { categories } = require("./categories");
 const { sub_categories } = require("./sub_categories");
 const { books } = require("./books");
 const {videos} = require("./videos");
+const { userHistory } = require("./userHistorySeed");
 
 /**
  * seed - this function clears the database, updates tables to
@@ -79,14 +80,25 @@ async function seed() {
     await Video.create(videos[i]);
   }
 
+  for (let i = 0; i < userHistory.length; i++) {
+    await User_History.create(userHistory[i]);
+  }
+
   const programming = await Course_Category.findOne({
     where: { course_cat_name: "Programming Languages" },
   });
+  const libraries = await Course_Category.findOne({
+    where: { course_cat_name: "Libraries" },
+  });
+
   let javascript = await Course_Sub_Category.findOne({
     where: { course_sub_cat_name: "Javascript" },
   });
   const python = await Course_Sub_Category.findOne({
     where: { course_sub_cat_name: "Python" },
+  });
+  const react = await Course_Sub_Category.findOne({
+    where: { course_sub_cat_name: "React" },
   });
 
   const modular_javascript = await Course.findOne({
@@ -98,13 +110,29 @@ async function seed() {
   const full_javascript = await Course.findOne({
     where: { course_name: "Javascript Programming Full Course" },
   });
+  const data_visualization = await Course.findOne({
+    where: { course_name: "Data Visualization With Python and Javascript" },
+  });
+  const game_development = await Course.findOne({
+    where: { course_name: "Game Development Using Python" },
+  });
+  const raect_redux = await Course.findOne({
+    where: { course_name: "React-Redux Beginner To Advanced" },
+  });
+
 
   javascript.setCourse_category(programming);
   python.setCourse_category(programming);
+  react.setCourse_category(libraries)
 
   modular_javascript.setCourse_sub_category(javascript);
   dont_know_js.setCourse_sub_category(javascript);
   full_javascript.setCourse_sub_category(javascript);
+
+  data_visualization.setCourse_sub_category(python);
+  game_development.setCourse_sub_category(python);
+
+  raect_redux.setCourse_sub_category(react);
 
   const book_dont_know_js = await Book.findOne({
     where: { book_name: "You Don't Know Javascript, ES6 And Beyond" },
@@ -112,15 +140,44 @@ async function seed() {
   const book_modular_js = await Book.findOne({
     where: { book_name: "Mastering Modular Javascript" },
   });
+  const book_data_visualization = await Book.findOne({
+    where: { book_name: "Data Visualization With Python and Javascript" },
+  });
+  const book_game_development = await Book.findOne({
+    where: { book_name: "Game Development with Python" },
+  });
 
   book_dont_know_js.setCourse(dont_know_js);
   book_modular_js.setCourse(modular_javascript);
+  book_data_visualization.setCourse(data_visualization);
+  book_game_development.setCourse(game_development);
 
   const video_full_javascript = await Video.findOne({
     where: { video_name: "Javascript Programming Full Course" },
   });
+  const video_react_redux = await Video.findOne({
+    where: { video_name: "React-Redux Beginner To Advanced" },
+  });
 
   video_full_javascript.setCourse(full_javascript);
+  video_react_redux.setCourse(raect_redux);
+
+
+  const userHistory1 = await User_History.findOne({
+    where: { last_opened: "Mar 10, 2023" },
+  });
+
+  const userHistory2 = await User_History.findOne({
+    where: { last_opened: "Mar 11, 2023" },
+  });
+
+  const user = await User.findByPk(1);
+
+  userHistory1.setUser(user);
+  userHistory1.setCourse(modular_javascript)
+
+  userHistory2.setUser(user);
+  userHistory2.setCourse(raect_redux)
 
   // const users = await User.bulkCreate(seededUsers);
 

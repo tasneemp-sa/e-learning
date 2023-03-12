@@ -7,6 +7,10 @@ const Course_Sub_Category = db.define("course_sub_category", {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  course_sub_cat_description: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
 });
 
 module.exports = Course_Sub_Category;

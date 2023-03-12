@@ -41,4 +41,8 @@ export const selectSubCourses = (state) => {
   return state.allCourses.allSubCourses;
 };
 
+export const selectAllCourses = (state) => {
+  return state.allCourses.allCourses;
+};
+
 export default allCoursesPageSlice.reducer;

@@ -5,10 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { connect } from "react-redux";
 import { logout } from "../../reducers/auth";
 import withRouter from "../../withRouter";
+import {me} from '../../reducers/auth'
 
 const Navbar = (props) => {
-  const { user, isLoggedIn, logoutUser } = props;
+  const dispatch = useDispatch();
+  let { user, isLoggedIn, logoutUser } = props;
   const javascriptId = 3;
+  const pythonId = 4;
+  const ReactId = 7;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -16,6 +20,17 @@ const Navbar = (props) => {
     event.preventDefault();
     setAnchorEl(event.currentTarget);
   };
+
+  useEffect(() => {
+
+    async function getUser() {
+      await dispatch(me());
+    }
+    if (window.localStorage.getItem("token") !== undefined) {
+      // isLoggedIn = true;
+      getUser();
+    }
+  }, [dispatch])
 
   return (
     <div>
@@ -78,7 +93,7 @@ const Navbar = (props) => {
                         </a>
                       </li>
                       <li>
-                        <a className="dropdown-item" href="#">
+                        <a className="dropdown-item" href="/subCategories/4">
                           Python
                         </a>
                       </li>
@@ -109,7 +124,7 @@ const Navbar = (props) => {
                     </a>
                     <ul className="dropdown-menu dropdown-submenu">
                       <li>
-                        <a className="dropdown-item" href="#">
+                        <a className="dropdown-item" href="/subCategories/7">
                           React
                         </a>
                       </li>
@@ -167,6 +182,9 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
+    loadInitialData() {
+      dispatch(me());
+    },
     logoutUser() {
       dispatch(logout());
     },
