@@ -20,6 +20,11 @@ const booksArr = [
         book_data: "/Books/gamedevelopmentusingpython.epub",
         book_length: "338 pages"
     },
+    {
+        book_name: "Artificial Intelligence In The 21st Century",
+        book_data: "/Books/artificialintelligence.epub",
+        book_length: "850 pages"
+    },
    
 ]
 

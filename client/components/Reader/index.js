@@ -11,16 +11,14 @@ function Reader(props) {
   const {bookId} = useParams();
   const dispatch = useDispatch();
   const bookData = useSelector(selectBookData);
-  console.log('bookData',bookData)
 
 // And your own state logic to persist state
 const [location, setLocation] = useState(null)
 const locationChanged = (epubcifi) => {
   // epubcifi is a internal string used by epubjs to point to a location in an epub. It looks like this: epubcfi(/6/6[titlepage]!/4/2/12[pgepubid00003]/3:0)
+  // epubcifi = "/1/1[titlepage]!/1/1/1[pgepubid00003]/3:0"
   setLocation(epubcifi)
 }
-
-let cfiString = "";
 
 useEffect(() => {
   async function getBookData () {
@@ -34,10 +32,7 @@ useEffect(() => {
 // }
 }, [dispatch]);
 
-
-
 // window.addEventListener("beforeunload", () => {
-// console.log('inside beforeunload')
 //   location = this.rendition.currentLocation()
 //   cfiString = location.start.cfi;
 //   window.localStorage.setItem("bookLoc", cfiString);
@@ -52,6 +47,21 @@ return (
       location={location}
       locationChanged={locationChanged}
       url={`${bookData.book_data}`}
+
+      getRendition={(rendition) => {
+        rendition.themes.register('custom', {
+          body: {
+            color: "black"
+          },
+          img: {
+            border: '1px solid red'
+          },
+          p: {
+            color: "black"
+          }
+        })
+        rendition.themes.select('custom')
+      }}
     />
     ) : "Loading"}
     

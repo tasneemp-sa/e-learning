@@ -32,7 +32,7 @@
    * Dummy devices (replace them with your own or something else entirely!)
    */
   
-  .product-device {
+.product-device {
     position: absolute;
     right: 10%;
     bottom: -30%;
@@ -52,7 +52,7 @@
     content: "";
     background-color: rgba(255, 255, 255, .1);
     border-radius: 5px;
-  }
+  } 
   
   .product-device-2 {
     top: -25%;
@@ -74,4 +74,4 @@
     .flex-md-equal > * {
       flex: 1;
     }
-  }
+  } 

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookOpen } from "@fortawesome/free-solid-svg-icons";
 import { faVideoCamera } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllCoursesPage, selectAllCourses } from "../../reducers/allCoursesPageSlice";
+import { fetchAllCoursesPage, selectAllCourses, setFilterBooks, setFilterVideos, set } from "../../reducers/allCoursesPageSlice";
 import { useNavigate } from "react-router-dom";
 
 const AllCourses = () => {
@@ -21,9 +21,21 @@ const AllCourses = () => {
     getCourses();
   }, [dispatch]);
 
+  function handleFilterVideos() {
+    dispatch(setFilterVideos());
+  }
+
+  function handleFilterBooks() {
+    dispatch(setFilterBooks());
+  }
+
+  async function handleFilterAll() {
+    await dispatch(fetchAllCoursesPage());
+  }
+
   return (
-    <div class="album py-5 bg-light">
-      <div class="container">
+    <div className="album py-5 bg-light">
+      <div className="container">
       <section className="py-5 text-center container">
         <div className="row py-lg-5">
           <div className="col-lg-6 col-md-8 mx-auto">
@@ -31,18 +43,21 @@ const AllCourses = () => {
             <p className="lead text-muted">
             From books to leading tech videos to a groundbreaking online learning platform, we’ve focused on creating the best technical learning content for more than four decades. Your teams can benefit from that experience.
             </p>
+            <button onClick={() => handleFilterAll()} className="btn btn-link my-2">
+                View All
+              </button>
             <p>
-              <a href="#" className="btn btn-primary my-2">
-                Main call to action
-              </a>
-              <a href="#" className="btn btn-secondary my-2">
-                Secondary action
-              </a>
+              <button onClick={() => handleFilterBooks()} className="btn btn-primary my-2 mx-2">
+                Books
+              </button>
+              <button onClick={() => handleFilterVideos()} className="btn btn-secondary my-2">
+                Videos
+              </button>
             </p>
           </div>
         </div>
       </section>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
           {courses && courses.length
             ? courses.map((course) => {
                 return (

@@ -24,7 +24,7 @@ const UserHistory = (props) => {
   const { isLoggedIn } = props;
 
   return (
-    <div className="container">
+    <div className="container mt-3">
       <div class="row mb-2">
       <strong class="d-inline-block mb-2 text-primary">
                   Your History

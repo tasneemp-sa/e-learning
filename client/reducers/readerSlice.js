@@ -20,7 +20,6 @@ export const readerSlice = createSlice({
   extraReducers: (build) => {
     build
       .addCase(fetchBookData.fulfilled, (state, action) => {
-        console.log('action.payload', action.payload)
         state.bookData = action.payload;
       });
   },

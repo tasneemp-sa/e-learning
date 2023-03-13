@@ -5,6 +5,8 @@ import { useDispatch, useSelector, connect } from "react-redux";
 import {
   fetchAllSubCategoryCourses,
   selectSubCourses,
+  setFilterBooks,
+  setFilterVideos
 } from "../../reducers/allCoursesPageSlice";
 import { useNavigate } from "react-router-dom";
 import {me} from '../../reducers/auth'
@@ -26,6 +28,18 @@ const Courses = () => {
     getSubCourses();
   }, [dispatch]);
 
+  function handleFilterVideos() {
+    dispatch(setFilterVideos());
+  }
+
+  function handleFilterBooks() {
+    dispatch(setFilterBooks());
+  }
+
+  async function handleFilterAll() {
+    await dispatch(fetchAllSubCategoryCourses(parseInt(subCategoryId)));
+  }
+
   return (
     <div className="container mt-0 pt-0">
       <section className="py-5 text-center container">
@@ -35,13 +49,16 @@ const Courses = () => {
             <p className="lead text-muted">
             {courses && courses.length ? `${courses[0]["course_sub_category"]["course_sub_cat_description"]}`: "Loading"}
             </p>
+            <button onClick={() => handleFilterAll()} className="btn btn-link my-2">
+                View All
+              </button>
             <p>
-              <a href="#" className="btn btn-primary my-2">
-                Main call to action
-              </a>
-              <a href="#" className="btn btn-secondary my-2">
-                Secondary action
-              </a>
+              <button onClick={() => handleFilterBooks()} className="btn btn-primary my-2 mx-2">
+                Books
+              </button>
+              <button onClick={() => handleFilterVideos()} className="btn btn-secondary my-2">
+                Videos
+              </button>
             </p>
           </div>
         </div>

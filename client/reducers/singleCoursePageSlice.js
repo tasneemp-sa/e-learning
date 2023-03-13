@@ -20,7 +20,6 @@ export const singleCoursePageSlice = createSlice({
   extraReducers: (build) => {
     build
       .addCase(fetchSingleCourse.fulfilled, (state, action) => {
-        console.log('action.payload', action.payload)
         state.singleCourse = action.payload;
       });
   },

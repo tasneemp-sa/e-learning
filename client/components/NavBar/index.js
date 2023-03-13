@@ -9,6 +9,7 @@ import {me} from '../../reducers/auth'
 
 const Navbar = (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   let { user, isLoggedIn, logoutUser } = props;
   const javascriptId = 3;
   const pythonId = 4;
@@ -27,10 +28,27 @@ const Navbar = (props) => {
       await dispatch(me());
     }
     if (window.localStorage.getItem("token") !== undefined) {
-      // isLoggedIn = true;
       getUser();
     }
   }, [dispatch])
+
+  function handleSubmit (e) {
+    e.preventDefault();
+    if (e.target.search.value.toLowerCase() === 'javascript') {
+      navigate('/subCategories/3');
+    }
+    else if (e.target.search.value.toLowerCase() === 'python') {
+      navigate('/subCategories/4');
+    }
+    else if (e.target.search.value.toLowerCase() === 'react') {
+      navigate('/subCategories/7');
+    }
+    else if (e.target.search.value.toLowerCase() === 'machine learning') {
+      navigate('/subCategories/1');
+    }
+    e.target.search.value = "";
+    
+  }
 
   return (
     <div>
@@ -40,7 +58,7 @@ const Navbar = (props) => {
       >
         <div className="container-fluid">
           <a className="navbar-brand text-primary font-height" href="/home">
-            SKY'S THE LIM<span className="text-danger">IT</span>
+            <span className="span-gradient">SKY'S THE LIM</span><span className="text-danger"><strong>IT</strong></span>
           </a>
           <button
             className="navbar-toggler"
@@ -70,12 +88,12 @@ const Navbar = (props) => {
                     </a>
                     <ul className="dropdown-menu dropdown-submenu">
                       <li>
-                        <a className="dropdown-item" href="#">
+                        <a className="dropdown-item" href="/subCategories/2">
                           Machine Learning
                         </a>
                       </li>
                       <li>
-                        <a className="dropdown-item" href="#">
+                        <a className="dropdown-item" href="/subCategories/2">
                           Artificial Intelligence
                         </a>
                       </li>
@@ -133,11 +151,13 @@ const Navbar = (props) => {
                 </ul>
               </li>
             </ul>
-            <form className="d-flex ms-auto" role="search">
+            <form className="d-flex ms-auto" role="search" onSubmit={(e) => {handleSubmit(e)}}>
               <input
                 className="form-control me-2"
+                name="search"
                 type="search"
                 placeholder="Search"
+
               />
               <button className="btn btn-outline-secondary" type="submit">
                 Search
@@ -148,11 +168,11 @@ const Navbar = (props) => {
               {isLoggedIn ? (
                 <>
                   <li className="nav-item">
-                   <p className="nav-link"> {`HI, ${user.first_name.toUpperCase()}`}</p>
+                   <p className="nav-link"> <strong>{`HI, ${user.first_name.toUpperCase()}`}</strong></p>
              
                   </li>
                   <li className="nav-item">
-                    <p className="nav-link" onClick={logoutUser}>
+                    <p className="nav-link hover-pointer" onClick={logoutUser}>
                       Log Out
                     </p>
                   </li>
@@ -173,7 +193,6 @@ const Navbar = (props) => {
 };
 
 const mapState = (state) => {
-  console.log('inside nav !!state.auth.id', state.auth)
   return {
     user: state.auth,
     isLoggedIn: !!state.auth.id,

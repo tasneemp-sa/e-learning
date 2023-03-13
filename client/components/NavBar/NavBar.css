@@ -23,3 +23,8 @@
   opacity: 0.9;
   filter: (opacity=90);
 }
+
+
+.hover-pointer:hover {
+  cursor: pointer;
+}

@@ -25,6 +25,14 @@ export const allCoursesPageSlice = createSlice({
     allSubCourses: []
   },
   reducers: {
+    setFilterVideos(state, action) {
+      state.allSubCourses = state.allSubCourses.filter(course => course.type === 'video');
+      state.allCourses = state.allCourses.filter(course => course.type === 'video');
+    },
+    setFilterBooks(state, action) {
+      state.allSubCourses = state.allSubCourses.filter(course => course.type === 'book');
+      state.allCourses = state.allCourses.filter(course => course.type === 'book');
+    },
   },
   extraReducers: (build) => {
     build
@@ -36,6 +44,8 @@ export const allCoursesPageSlice = createSlice({
       });
   },
 });
+
+export const {setFilterVideos, setFilterBooks} = allCoursesPageSlice.actions;
 
 export const selectSubCourses = (state) => {
   return state.allCourses.allSubCourses;

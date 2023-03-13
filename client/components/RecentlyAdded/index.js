@@ -13,7 +13,7 @@ const RecentlyAdded = () => {
   const dispatch = useDispatch();
   let courses = useSelector(selectAllCourses);
 
-  courses = courses.slice(3);
+  courses = courses.slice(3, 6);
 
   useEffect(() => {
     async function getCourses () {
@@ -23,10 +23,10 @@ const RecentlyAdded = () => {
   }, [dispatch]);
 
   return (
-    <div class="album py-5 bg-light">
-      <div class="container">
-        <h4 class="text">Recently Added</h4>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    <div className="album py-5 bg-light">
+      <div className="container">
+        <h4 className="text">Recently Added</h4>
+        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
           {courses && courses.length
             ? courses.map((course) => {
                 return (

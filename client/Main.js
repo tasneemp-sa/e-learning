@@ -22,6 +22,7 @@ import { connect } from "react-redux";
 import {me} from './reducers/auth'
 import AllCourses from "./components/AllCourses";
 import UserHistory from "./components/UserHistory";
+import Footer from "./components/Footer";
 
 const Main = (props) => {
 
@@ -43,6 +44,7 @@ const Main = (props) => {
           <Route path="/userHistory/:userId" element={<UserHistory />}></Route>
         </Routes>
       </div>
+      <Footer/>
     </div>
   );
 };

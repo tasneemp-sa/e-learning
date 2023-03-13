@@ -53,6 +53,15 @@ const coursesArr = [
         time_to_complete: "1 hr 41 mins",
         type: "video",
         thumbnail: "./Thumbnails/react_redux.jpeg"
+    },
+    {
+        course_name: "Artificial Intelligence In The 21st Century",
+        overview: "This third edition provides a comprehensive, colorful, up-to-date, and accessible presentation of AI without sacrificing theoretical foundations. It includes numerous examples, applications, full color images, and human interest boxes to enhance student interest. New chapters on deep learning, AI security, and AI programming are included. Advanced topics cover neural nets, genetic algorithms, natural language processing, planning, and complex board games. A companion disc is provided with resources, applications, and figures from the book. Numerous instructors’ resources are available upon adoption.",
+        author: "Stephen Lucci, Danny Kopec, Sarhan M. Musa",
+        meant_for: "Basic knowledge of ML/AI",
+        time_to_complete: "8 hr 12 mins",
+        type: "book",
+        thumbnail: "./Thumbnails/artificial_intelligence.jpeg"
     }
 ]
 

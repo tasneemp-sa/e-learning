@@ -20,9 +20,6 @@ const SingleCourse = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const courseDetails = useSelector(selectSingleCourse);
-  console.log("courseDetails ", courseDetails);
-  console.log("book ", courseDetails.book);
-  console.log("course_sub_Category ", courseDetails.course_sub_category);
 
   useEffect(() => {
     async function getCourseDetails() {
@@ -31,8 +28,7 @@ const SingleCourse = () => {
     getCourseDetails();
   }, [dispatch]);
 
-  // async function handleStartBook() {
-  //   console.log('inside handleStart ')
+  // async function handleStartBook(e) {
   //   if (window.localStorage.getItem("token")) {
   //     let userId = await dispatch(getLoggedInUserId())
   //     await dispatch(postUserHistory({userId: userId.payload, courseId: id}))
@@ -53,7 +49,7 @@ const SingleCourse = () => {
   return (
     <div className="container">
       {courseDetails && courseDetails.book !== undefined && courseDetails.course_sub_category !== undefined ? (
-        <div className="container">
+        <div className="container pt-3">
           
           <div className="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div className="col-auto d-none d-lg-block">
@@ -87,11 +83,11 @@ const SingleCourse = () => {
 
               {courseDetails.type === 'book' ? (
                  <a href={`/reader/${courseDetails.book.id}`} className="stretched-link">
-                 <button type="button" className="btn btn-primary btn-lg col-3 mt-3" /*onClick={() => handleStartBook()}*/>Start Course</button>
-                   </a>
+                 <button type="button" id="book-btn" className="btn btn-primary btn-lg col-3 mt-3" >Start Course</button>
+                    </a> 
               ) : (
                 <a href={`/video-player/${courseDetails.video.id}`} className="stretched-link">
-                <button type="button" className="btn btn-primary btn-lg col-3 mt-3" /*onClick={() => handleStartVideo()}*/>Start Course</button>
+                <button type="button" className="btn btn-primary btn-lg col-3 mt-3">Start Course</button>
                   </a>
               )}
                
